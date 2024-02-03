@@ -71,5 +71,6 @@ group :test do
 
 end
 
-gem "activerecord-postgis-adapter"
+gem 'activerecord-postgis-adapter'
 gem "rgeo"
+gem "faker"
