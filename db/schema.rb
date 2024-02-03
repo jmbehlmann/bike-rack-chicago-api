@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_02_03_163616) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_03_164706) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
@@ -22,6 +22,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_03_163616) do
     t.string "style"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.geography "location", limit: {:srid=>4326, :type=>"st_point", :geographic=>true}
   end
 
 end

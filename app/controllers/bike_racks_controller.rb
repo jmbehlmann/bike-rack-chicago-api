@@ -1,0 +1,5 @@
+class BikeRacksController < ApplicationController
+
+
+
+end
