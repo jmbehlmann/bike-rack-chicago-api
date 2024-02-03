@@ -14,7 +14,19 @@ class BikeRacksController < ApplicationController
 # nearest_bike_racks = BikeRack.order(Arel.sql("location <-> ST_GeographyFromText('POINT(#{longitude} #{latitude})')")).limit(3)
 
   def index
-    @bike_racks = BikeRack.all
+    if params[:location].present?
+      location = Geocoder.search(params[:location])
+      if location.present? && location.first.present?
+        latitude = location.first.latitude
+        longitude = location.first.longitude
+        @bike_racks = BikeRack.near([latitude, longitude]).limit(5)
+      else
+        # Handle the case where Geocoder couldn't find coordinates for the provided location
+        @bike_racks = []
+      end
+    else
+      @bike_racks = BikeRack.all
+    end
     render :index
   end
 
