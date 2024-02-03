@@ -74,3 +74,4 @@ end
 gem 'activerecord-postgis-adapter'
 gem "rgeo"
 gem "faker"
+gem "geocoder"
