@@ -27,7 +27,7 @@ class BikeRacksController < ApplicationController
     elsif params[:latitude].present? && params[:longitude].present?
       @bike_racks = BikeRack.near("#{params[:latitude]}, #{params[:longitude]}").limit(5)
     else
-      @bike_racks = BikeRack.all
+      @bike_racks = BikeRack.first(10)
     end
     render :index
   end
