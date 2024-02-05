@@ -19,13 +19,13 @@ class BikeRacksController < ApplicationController
       if location.present?
         latitude = location.latitude
         longitude = location.longitude
-        @bike_racks = BikeRack.near([latitude, longitude]).limit(5)
+        @bike_racks = BikeRack.near([latitude, longitude]).limit(10)
       else
         # Handle case where Geocoder can't find coordinates for the provided location
         @bike_racks = []
       end
     elsif params[:latitude].present? && params[:longitude].present?
-      @bike_racks = BikeRack.near("#{params[:latitude]}, #{params[:longitude]}").limit(5)
+      @bike_racks = BikeRack.near("#{params[:latitude]}, #{params[:longitude]}").limit(10)
     else
       @bike_racks = BikeRack.first(10)
     end
