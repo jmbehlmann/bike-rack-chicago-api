@@ -24,6 +24,8 @@ class BikeRacksController < ApplicationController
         # Handle case where Geocoder can't find coordinates for the provided location
         @bike_racks = []
       end
+    elsif params[:latitude].present? && params[:longitude].present?
+      @bike_racks = BikeRack.near("#{params[:latitude]}, #{params[:longitude]}").limit(5)
     else
       @bike_racks = BikeRack.all
     end
