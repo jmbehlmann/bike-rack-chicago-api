@@ -30,4 +30,55 @@ class BikeRacksController < ApplicationController
     render :index
   end
 
+  def show
+    @bike_rack = BikeRack.find(params[:id])
+    render :show
+  end
+
+  def create
+    @bike_rack = BikeRack.new(
+      name: params[:name],
+      description: params[:description],
+      quantity: params[:quantity],
+      style: params[:style],
+      location: "POINT (#{params[:longitude]} #{params[:latitude]})",
+      latitude: params[:latitude],
+      longitude: params[:longitude],
+    )
+    if @bike_rack.save
+      render :show
+    else
+      render json: {message: "there was a problem creating this bike rack"}
+    end
+  end
+
+  def update
+    @bike_rack = BikeRack.find(params[:id])
+    @bike_rack.assign_attributes(
+      name: params[:name] || @bike_rack.name,
+      description: params[:description] || @bike_rack.description,
+      quantity: params[:quantity] || @bike_rack.quantity,
+      style: params[:style] || @bike_rack.style,
+      latitude: params[:latitude] || @bike_rack.latitude,
+      longitude: params[:longitude] || @bike_rack.longitude,
+    )
+
+    if params[:longitude].present? && params[:latitude].present?
+      @bike_rack.location = "POINT (#{params[:longitude]} #{params[:latitude]})"
+    elsif params[:longitude].present?
+      @bike_rack.location = "POINT (#{params[:longitude]} #{@bike_rack.latitude})"
+    elsif params[:latitude].present?
+      @bike_rack.location = "POINT (#{@bike_rack.longitude} #{params[:latitude]})"
+    else
+      @bike_rack.location = @bike_rack.location
+    end
+
+    if @bike_rack.save
+      render :show
+    else
+      render json: {message: "there was a problem updating this bike rack"}
+    end
+  end
+
 end
+
