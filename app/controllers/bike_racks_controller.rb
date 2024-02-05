@@ -80,5 +80,11 @@ class BikeRacksController < ApplicationController
     end
   end
 
+  def destroy
+    @bike_rack = BikeRack.find(params[:id])
+    @bike_rack.destroy
+    render json: {message: "you destroyed a bike rack"}
+  end
+
 end
 
