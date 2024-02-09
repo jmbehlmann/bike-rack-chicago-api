@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV.fetch('DATABASE_URL', '').sub(/^postgres/, "postgis") %>
   database: bike_rack_chicago_api_production
   username: bike_rack_chicago_api
   password: <%= ENV["BIKE_RACK_CHICAGO_API_DATABASE_PASSWORD"] %>
