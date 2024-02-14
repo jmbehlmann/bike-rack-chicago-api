@@ -13,9 +13,9 @@ csv.each do |row|
   t.description = row['Address']
   t.quantity = row['TotInstall']
   t.style = "X"
-  lat = row['Latitude']
-  lon = row['Longitude']
-  t.location = "POINT (#{lon} #{lat})"
+  # lat = row['Latitude']
+  # lon = row['Longitude']
+  # t.location = "POINT (#{lon} #{lat})"
   t.latitude = row['Latitude']
   t.longitude = row['Longitude']
   t.save
@@ -33,7 +33,7 @@ csv.each do |row|
   t.description = row['Location']
   t.quantity = row['Quantity']
   t.style = row['Type']
-  t.location = row['the_geom']
+  # t.location = row['the_geom']
   t.latitude = row['Latitude']
   t.longitude = row['Longitude']
   t.save
