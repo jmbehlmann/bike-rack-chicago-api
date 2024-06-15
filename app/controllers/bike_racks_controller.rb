@@ -19,18 +19,24 @@ class BikeRacksController < ApplicationController
       if location.present?
         latitude = location.latitude
         longitude = location.longitude
+        Rails.logger.info "Location found: #{latitude}, #{longitude}"
         @bike_racks = BikeRack.near([latitude, longitude]).limit(10)
       else
-        # Handle case where Geocoder can't find coordinates for the provided location
+        Rails.logger.warn "Geocoder couldn't find coordinates for location: #{params[:location]}"
+        Rails.logger.warn "Geocoder response: #{location.inspect}"
         @bike_racks = []
       end
     elsif params[:latitude].present? && params[:longitude].present?
+      Rails.logger.info "Coordinates provided: #{params[:latitude]}, #{params[:longitude]}"
       @bike_racks = BikeRack.near("#{params[:latitude]}, #{params[:longitude]}").limit(10)
     else
+      Rails.logger.info "No location or coordinates provided"
       @bike_racks = BikeRack.first(10)
     end
     render :index
   end
+
+
 
   def show
     @bike_rack = BikeRack.find(params[:id])
